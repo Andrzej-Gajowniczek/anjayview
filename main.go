@@ -29,17 +29,23 @@ func main() {
 			fileList = append(fileList, filepath.Join(currentDir, file.Name()))
 		}
 	}
-
+	if len(fileList) == 0 {
+		fmt.Println("There is no gfx files in this directory:", currentDir)
+	} else {
+		fmt.Printf("len(fileList)=%d\n", len(fileList))
+	}
 	// Sort the list by creation date
 	sort.Slice(fileList, func(i, j int) bool {
 		time1, _ := getFileCreationTime(fileList[i])
 		time2, _ := getFileCreationTime(fileList[j])
 		return time1.Before(time2)
 	})
+	/*
+		for _, file := range fileList {
+			fmt.Println(file)
+		}
+	*/
 
-	for _, file := range fileList {
-		fmt.Println(file)
-	}
 }
 
 // Function to check if a file has a graphic file extension
