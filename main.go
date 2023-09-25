@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -17,18 +18,16 @@ func main() {
 
 	// List all files in the current directory
 	fileList := []string{}
-	err = filepath.Walk(currentDir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() && isGraphicsFile(path) {
-			fileList = append(fileList, path)
-		}
-		return nil
-	})
+	files, err := os.ReadDir(currentDir)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
+	}
+
+	for _, file := range files {
+		if !file.IsDir() && isGraphicsFile(file.Name()) {
+			fileList = append(fileList, filepath.Join(currentDir, file.Name()))
+		}
 	}
 
 	// Sort the list by creation date
@@ -46,7 +45,7 @@ func main() {
 // Function to check if a file has a graphic file extension
 func isGraphicsFile(filename string) bool {
 	extensions := []string{".jpg", ".jpeg", ".png", ".gif", ".bmp", ".svg"}
-	ext := filepath.Ext(filename)
+	ext := strings.ToLower(filepath.Ext(filename))
 	for _, validExt := range extensions {
 		if ext == validExt {
 			return true
