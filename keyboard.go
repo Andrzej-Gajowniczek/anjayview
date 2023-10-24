@@ -14,7 +14,7 @@ func (ter *termboxRes) keyboardControl() {
 			case termbox.KeyArrowUp:
 				//fmt.Println("Up arrow key pressed")
 
-				if ter.movable == true {
+				if ter.movable {
 					ter.startPointY--
 					if ter.startPointY < 0 {
 						ter.startPointY = 0
@@ -26,7 +26,7 @@ func (ter *termboxRes) keyboardControl() {
 				termbox.Flush()
 			case termbox.KeyArrowDown:
 
-				if ter.movable == true {
+				if ter.movable {
 					//fmt.Println("Down arrow key pressed")
 					ter.startPointY++
 					if ter.startPointY > (ter.currentImgY - ter.yMax*2) { //*2 means count with double density because block pixel is a half as tall as whole cursor hight
@@ -40,7 +40,7 @@ func (ter *termboxRes) keyboardControl() {
 				//ter.PrintAt(0, 30, "sx:%d, sy:%d  ter.currentImgY - ter.yMax:%d, imgY:%d", ter.startPointX, ter.startPointY, (ter.currentImgY - ter.yMax), ter.currentImgY)
 				termbox.Flush()
 			case termbox.KeyArrowLeft:
-				if ter.movable == true {
+				if ter.movable {
 					//fmt.Println("Left arrow key pressed")
 					ter.startPointX--
 					if ter.startPointX < 0 {
@@ -53,7 +53,7 @@ func (ter *termboxRes) keyboardControl() {
 
 				termbox.Flush()
 			case termbox.KeyArrowRight:
-				if ter.movable == true {
+				if ter.movable {
 					//fmt.Println("Right arrow key pressed")
 
 					ter.startPointX++
@@ -70,7 +70,7 @@ func (ter *termboxRes) keyboardControl() {
 
 				termbox.Close()
 				os.Exit(0)
-				break //eventLoop // Exit the event loop when Ctrl+C is pressed
+				//	break //eventLoop // Exit the event loop when Ctrl+C is pressed
 
 			//default:
 			//	ter.renderBigScrollableImg()
@@ -81,6 +81,9 @@ func (ter *termboxRes) keyboardControl() {
 					ter.pictureIndex = 0
 				}
 				ter.openImg(ter.filelist[ter.pictureIndex])
+				ter.startPointX = 0
+				ter.startPointY = 0
+				ter.renderBigScrollableImg()
 
 			}
 			switch ev.Ch {

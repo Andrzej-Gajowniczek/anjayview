@@ -34,10 +34,10 @@ func (ter *termboxRes) openImg(s string) *os.File {
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			r, g, b, a := m.At(x, y).RGBA()
+			r, g, b, _ := m.At(x, y).RGBA()
 			// A color's RGBA method returns values in the range [0, 65535].
 			// Shifting by 12 reduces this to the range [0, 15].
-			a = a >> 8
+			//a = a >> 8
 			r = r >> 8
 			g = g >> 8
 			b = b >> 8
@@ -51,12 +51,27 @@ func (ter *termboxRes) openImg(s string) *os.File {
 	ter.desiredImgX = newImg.Bounds().Size().X
 	ter.desiredImgY = newImg.Bounds().Size().Y
 
-	//checkker("newX:%d, newY:%d\n", ter.desiredImgX, ter.desiredImgY)
+	//checkker("newX:%d:xMax:%d, newY:%d:yMax:%d\nfilename:%s\n", ter.desiredImgX, ter.xMax, ter.desiredImgY, ter.yMax, ter.filelist[ter.pictureIndex])
 
 	newSmall := make([][]termbox.Attribute, ter.desiredImgY)
 	for i, _ := range newSmall {
 		newSmall[i] = make([]termbox.Attribute, ter.desiredImgX)
 
+	}
+	ter.desiredImgMap = newSmall
+	ter.imgScrPtr = &newImg
+
+	for y := 0; y < ter.desiredImgY; y++ {
+		for x := 0; x < ter.desiredImgX; x++ {
+			r, g, b, a := m.At(x, y).RGBA()
+			// A color's RGBA method returns values in the range [0, 65535].
+			// Shifting by 12 reduces this to the range [0, 15].
+			a = a >> 8
+			r = r >> 8
+			g = g >> 8
+			b = b >> 8
+			ter.desiredImgMap[y][x] = termbox.RGBToAttribute(uint8(r), uint8(g), uint8(b))
+		}
 	}
 
 	return reader

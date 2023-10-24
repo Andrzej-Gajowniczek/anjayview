@@ -55,10 +55,9 @@ func main() {
 	konsola.dirInit()
 
 	konsola.doubleConsoleresolution()
-	//konsola.renderBigScrollableImg()
 
 	konsola.pictureCount = len(konsola.filelist)
-	konsola.pictureIndex = 2
+	konsola.pictureIndex = 1
 	//checkker("index: %d; filename:%s\ntotal pic count:%d\nfile list: %v\n", konsola.pictureIndex, konsola.filelist[konsola.pictureIndex], konsola.pictureCount, konsola.filelist)
 	filePtr := konsola.openImg(konsola.filelist[konsola.pictureIndex])
 	if filePtr == nil {
@@ -66,11 +65,11 @@ func main() {
 		termbox.Close()
 		os.Exit(123)
 	}
-	/*
-		if konsola.movable == true {
-			konsola.renderBigScrollableImg()
-			termbox.Flush()
-		}*/
+
+	if konsola.movable {
+		konsola.renderBigScrollableImg()
+		termbox.Flush()
+	}
 	konsola.keyboardControl()
 
 }
