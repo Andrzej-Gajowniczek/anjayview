@@ -86,3 +86,10 @@ func (t *termboxRes) initT() {
 	t.mode = termbox.SetOutputMode(termbox.OutputRGB)
 	termbox.HideCursor()
 }
+
+func (ter *termboxRes) refresh() {
+	ter.doubleConsoleresolution()
+	termbox.Clear(0, 0)
+	ter.showPicture()
+	termbox.Flush()
+}

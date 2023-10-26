@@ -63,10 +63,10 @@ func (ter *termboxRes) openImg(s string) *os.File {
 
 	for y := 0; y < ter.desiredImgY; y++ {
 		for x := 0; x < ter.desiredImgX; x++ {
-			r, g, b, a := m.At(x, y).RGBA()
+			r, g, b, _ := newImg.At(x, y).RGBA()
 			// A color's RGBA method returns values in the range [0, 65535].
 			// Shifting by 12 reduces this to the range [0, 15].
-			a = a >> 8
+			//a = a >> 8
 			r = r >> 8
 			g = g >> 8
 			b = b >> 8

@@ -15,7 +15,7 @@ import (
 // rermboxRes is struct that hold all variable and other data type needed for this app to be stored between functions calls ////////////////
 type termboxRes struct {
 	//original size image to scroll if it's biger than console size
-	active        bool
+	active        int
 	movable       bool               //if cursors can scroll a picture biger than console resolution
 	xMax          int                //img X console resolution
 	yMax          int                //img y console resolution
@@ -46,7 +46,7 @@ type termboxRes struct {
 func main() {
 
 	var konsola termboxRes
-	konsola.movable = true
+	konsola.movable = false
 
 	// iniT() function is a method on konsola struct that fill in resolution max width and hight as well as initialize termbox screen wit RGB mode
 	konsola.initT()
@@ -54,6 +54,7 @@ func main() {
 
 	konsola.dirInit()
 
+	termbox.Clear(1, 1)
 	konsola.doubleConsoleresolution()
 
 	konsola.pictureCount = len(konsola.filelist)
@@ -66,10 +67,9 @@ func main() {
 		os.Exit(123)
 	}
 
-	if konsola.movable {
-		konsola.renderBigScrollableImg()
-		termbox.Flush()
-	}
+	konsola.showPicture()
+	termbox.Flush()
+
 	konsola.keyboardControl()
 
 }
