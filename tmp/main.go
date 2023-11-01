@@ -4,6 +4,8 @@ import "fmt"
 
 func main() {
 
+	var stringiS []string
+	stringiS = append(stringiS, "fontanna", "Radosław", "zamieć")
 	//var tablica []string
 	tablica := []string{"Ala", "kot", "Iza", "Ala", "dom"}
 	var mapa = make(map[string]int, len(tablica))
