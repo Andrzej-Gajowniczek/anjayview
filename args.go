@@ -51,8 +51,3 @@ func printVersion() {
 func printAbout() {
 	os.Exit(0)
 }
-func main() {
-
-	napis := getArgs()
-	fmt.Println(napis)
-}

@@ -9,8 +9,8 @@ import (
 
 func (konsola *termboxRes) dirInit() {
 	var err error
-	konsola.dirPath, err = os.Getwd()
-	checkError(err, "Get current dirr")
+	konsola.dirPath = getArgs()
+	//checkError(err, "Get current dirr")
 	// List all files in the current directory
 	files, err := os.ReadDir(konsola.dirPath)
 	if err != nil {
